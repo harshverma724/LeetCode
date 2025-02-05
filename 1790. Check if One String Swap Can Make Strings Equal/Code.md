@@ -1,3 +1,11 @@
+Explanation:
+Initial Check: If the strings are already equal, we return true immediately (no swap needed).
+Find Differences: We loop through both strings and record the indices where the characters differ.
+Conditions for Swap:
+If there are exactly two differences, we check if swapping the characters at these two indices will make the strings equal.
+We compare s1[i] with s2[j] and s1[j] with s2[i] to see if a swap can make the strings equal.
+Return the Result: If the above conditions hold, return true, otherwise false.
+
             public class Solution {
                 public boolean areAlmostEqual(String s1, String s2) {
                     // If the strings are already equal, no swap is needed
