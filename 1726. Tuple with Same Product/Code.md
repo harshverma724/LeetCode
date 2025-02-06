@@ -28,6 +28,31 @@ However, for each valid tuple, there are **4 permutations** (since the tuple `(a
 
 Therefore, the total number of valid tuples for each product with `k` occurrences is:
 
+k * (k - 1) * 4
+
+### 4. **Edge Case Handling**
+
+We ensure that we only consider products that appear more than once. If a product appears only once, it cannot form any valid tuple, so we skip it.
+
+### 5. **Final Result**
+
+The final result is the sum of valid tuples for all products. The value is returned as the total number of valid tuples `(a, b, c, d)` where `a * b = c * d` and `a != b != c != d`.
+
+## Time Complexity
+
+- **O(n²)**: We generate all pairs `(a, b)` in the array, and for each pair, we perform constant-time operations to update the HashMap.
+  - This results in a time complexity of O(n²) because there are `n * (n - 1) / 2` pairs, where `n` is the length of the input array.
+
+- **O(n²)**: We loop through the HashMap to count the number of valid tuples based on the product frequencies. In the worst case, this step is linear with respect to the number of unique products (which is bounded by n² for an array of size `n`).
+
+Thus, the overall time complexity is **O(n²)**, which is efficient enough for typical input sizes.
+
+## Space Complexity
+
+- **O(n²)**: The space complexity comes from storing all the pairwise products in the HashMap. In the worst case, there can be O(n²) unique products if the array contains distinct elements and the products do not repeat.
+  
+  Therefore, the space complexity is **O(n²)**.
+
 
             
             import java.util.HashMap;
