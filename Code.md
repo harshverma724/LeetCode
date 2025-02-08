@@ -14,10 +14,11 @@ The task is to design a **Number Container System** that can store numbers at sp
 
 Consider the following sequence of operations:
 
-```plaintext
+plaintext
 ["NumberContainers", "find", "change", "change", "change", "change", "find", "change", "find"]
 [[], [10], [2, 10], [1, 10], [3, 10], [5, 10], [10], [1, 20], [10]]
 
+```Code :
 class NumberContainers {
 
     // Maps from number to set of indices and from index to number
