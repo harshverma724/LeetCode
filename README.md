@@ -18,7 +18,7 @@ Practicing LeetCode problems daily helps in:
 Each day's solution will be available as a separate file in this repository. The file name will follow the format:
 
 ```
-YYYY-MM-DD_Problem-Name.md
+Problem-Name.md
 ```
 
 ## Technologies Used
