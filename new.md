@@ -103,9 +103,3 @@ class Solution {
 
 ---
 
-## Links
-
-- [LeetCode Problem Link](https://leetcode.com/problems/apply-operations-to-an-array/)
-
----
-
