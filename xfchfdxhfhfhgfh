@@ -1,0 +1,109 @@
+
+# Leetcode Problem 1780: Check if Number is a Sum of Powers of Three
+
+## Problem Description
+Given an integer `n`, determine whether it is possible to represent `n` as the **sum of distinct powers of three**.
+
+An integer `y` is considered a power of three if there exists an integer `x` such that:  
+\[
+y = 3^x
+\]
+
+### Example 1
+```
+Input: n = 12
+Output: true
+Explanation: 12 = 3^1 + 3^2
+```
+
+### Example 2
+```
+Input: n = 91
+Output: true
+Explanation: 91 = 3^0 + 3^2 + 3^4
+```
+
+### Example 3
+```
+Input: n = 21
+Output: false
+```
+
+### Constraints
+- \(1 \leq n \leq 10^7\)
+
+---
+
+## Approach
+
+This problem can be solved using a **recursive backtracking approach**.
+
+The goal is to explore whether it’s possible to form `n` by adding up **distinct powers of 3**. Since the powers must be distinct, once a power (like \(3^2\)) is included, it cannot be reused.
+
+### Key Observations
+- Powers of 3 grow exponentially (3, 9, 27, ...), so the recursion tree is limited.
+- Each power can either be **included** in the sum or **skipped**.
+- Once the current power exceeds `n`, further powers will only make the sum larger, so we prune the recursion at that point.
+
+---
+
+## Recursive Approach Explanation
+
+The recursive function `checkPowersOfThreeHelper` explores two options at each step:
+1. **Include the current power of 3 in the sum and subtract it from `n`**.
+2. **Skip the current power and move to the next power of 3**.
+
+The base case:
+- If `n == 0`, it means we've found a valid sum.
+- If the current power of 3 exceeds `n`, we stop and return `false`.
+
+### Code
+```java
+class Solution {
+
+    public boolean checkPowersOfThree(int n) {
+        return checkPowersOfThreeHelper(0, n);
+    }
+
+    private boolean checkPowersOfThreeHelper(int power, int n) {
+        // Base case: if n becomes 0, we have successfully formed the sum
+        if (n == 0) return true;
+
+        // If the current power of 3 exceeds n, we can't use it
+        if (Math.pow(3, power) > n) return false;
+
+        // Option 1: Use the current power of 3 and subtract it from n
+        boolean addPower = checkPowersOfThreeHelper(
+            power + 1,
+            n - (int) Math.pow(3, power)
+        );
+
+        // Option 2: Skip the current power of 3 and move to the next power
+        boolean skipPower = checkPowersOfThreeHelper(power + 1, n);
+
+        // We succeed if either option works
+        return addPower || skipPower;
+    }
+}
+```
+
+---
+
+## Time Complexity
+- In the worst case, the recursion explores all combinations of powers of 3.
+- Powers of 3 grow very fast, so there are at most about 15 powers needed to cover \(n \leq 10^7\).
+- The time complexity is **O(2^k)**, where `k` is the number of powers we consider (at most around 15), so it’s feasible.
+
+## Space Complexity
+- **O(k)** for the recursion stack, where `k` is the number of powers considered.
+
+---
+
+## Optimization Note
+This recursive approach works for the given constraint (up to \(10^7\)), but for larger limits, we could consider:
+- Precomputing all powers of 3 up to \(10^7\) and using an **iterative bitmasking approach** to check all combinations.
+
+---
+
+## Conclusion
+This recursive backtracking approach is clear and works within the given constraint. It efficiently prunes the search space when powers exceed the target value.
