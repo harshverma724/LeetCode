@@ -1,0 +1,142 @@
+# Zero Array Transformation II
+
+This repository contains a solution to the LeetCode problem **3356. Zero Array Transformation II**.
+
+## Problem Statement
+You are given an integer array `nums` of length `n` and a 2D array `queries` where `queries[i] = [li, ri, vali]`.
+
+Each `queries[i]` represents the following action on `nums`:
+- Decrement the value at each index in the range `[li, ri]` in `nums` by at most `vali`.
+- The amount by which each value is decremented can be chosen independently for each index.
+
+A **Zero Array** is an array with all its elements equal to `0`.
+
+Return the **minimum possible non-negative value** of `k`, such that after processing the first `k` queries in sequence, `nums` becomes a Zero Array. If no such `k` exists, return `-1`.
+
+---
+
+## Examples
+### Example 1:
+**Input:**
+```java
+nums = [2,0,2], queries = [[0,2,1],[0,2,1],[1,1,3]]
+```
+**Output:**
+```java
+2
+```
+**Explanation:**
+- After processing the first query, `nums` becomes `[1, 0, 1]`.
+- After processing the second query, `nums` becomes `[0, 0, 0]`.
+- The minimum value of `k` to transform `nums` into a Zero Array is `2`.
+
+### Example 2:
+**Input:**
+```java
+nums = [4,3,2,1], queries = [[1,3,2],[0,2,1]]
+```
+**Output:**
+```java
+-1
+```
+**Explanation:**
+- The array cannot become a Zero Array within the given queries.
+
+---
+
+## Constraints
+- `1 <= nums.length <= 10^5`
+- `0 <= nums[i] <= 5 * 10^5`
+- `1 <= queries.length <= 10^5`
+- `queries[i].length == 3`
+- `0 <= li <= ri < nums.length`
+- `1 <= vali <= 5`
+
+---
+
+## Solution Approach
+The solution uses **Binary Search + Difference Array** to efficiently determine the minimum `k` required to turn `nums` into a Zero Array.
+
+### Code Implementation
+```java
+class Solution {
+    public int minZeroArray(int[] nums, int[][] queries) {
+        int n = nums.length, left = 0, right = queries.length;
+
+        // Zero array isn't formed after all queries are processed
+        if (!currentIndexZero(nums, queries, right)) return -1;
+
+        // Binary Search
+        while (left <= right) {
+            int middle = left + (right - left) / 2;
+            if (currentIndexZero(nums, queries, middle)) {
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
+        }
+
+        // Return earliest query that zero array can be formed
+        return left;
+    }
+
+    private boolean currentIndexZero(int[] nums, int[][] queries, int k) {
+        int n = nums.length, sum = 0;
+        int[] differenceArray = new int[n + 1];
+
+        // Process query
+        for (int queryIndex = 0; queryIndex < k; queryIndex++) {
+            int left = queries[queryIndex][0], right = queries[queryIndex][1], val = queries[queryIndex][2];
+            
+            // Process start and end of range
+            differenceArray[left] += val;
+            differenceArray[right + 1] -= val;
+        }
+
+        // Check if zero array can be formed
+        for (int numIndex = 0; numIndex < n; numIndex++) {
+            sum += differenceArray[numIndex];
+            if (sum < nums[numIndex]) return false;
+        }
+        return true;
+    }
+}
+```
+
+### Explanation
+1. **Binary Search:** Determines the minimum `k` that can convert `nums` into a Zero Array.
+2. **Difference Array:** Used to efficiently apply the decrement operations over ranges.
+3. **Validation:** Ensures that after `k` queries, `nums` becomes `[0, 0, 0, ...]`.
+
+### Complexity Analysis
+- **Binary Search:** `O(log m)`, where `m` is the number of queries.
+- **Processing Queries:** `O(n + m)`, due to the difference array method.
+- **Total Complexity:** `O(n log m + m)`, which is efficient for large constraints.
+
+---
+
+## How to Run
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/zero-array-transformation.git
+```
+2. Navigate to the project directory:
+```bash
+cd zero-array-transformation
+```
+3. Compile and run the Java file:
+```bash
+javac Solution.java
+java Solution
+```
+
+---
+
+## Contribution
+Feel free to fork the repository, open an issue, or submit a pull request for improvements and additional features.
+
+---
+
+## License
+This project is licensed under the MIT License.
+
