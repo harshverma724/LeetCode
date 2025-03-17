@@ -1,0 +1,98 @@
+# 2206. Divide Array Into Equal Pairs
+
+## Problem Statement
+You are given an integer array `nums` consisting of `2 * n` integers.
+
+You need to divide `nums` into `n` pairs such that:
+
+1. Each element belongs to exactly one pair.
+2. The elements present in a pair are equal.
+
+Return `true` if `nums` can be divided into `n` pairs, otherwise return `false`.
+
+### Example 1:
+**Input:**
+```plaintext
+nums = [3,2,3,2,2,2]
+```
+**Output:**
+```plaintext
+true
+```
+**Explanation:**
+There are 6 elements in `nums`, so they should be divided into `6 / 2 = 3` pairs.
+If `nums` is divided into the pairs `(2, 2)`, `(3, 3)`, and `(2, 2)`, it will satisfy all the conditions.
+
+### Example 2:
+**Input:**
+```plaintext
+nums = [1,2,3,4]
+```
+**Output:**
+```plaintext
+false
+```
+**Explanation:**
+There is no way to divide `nums` into `4 / 2 = 2` pairs such that the pairs satisfy every condition.
+
+### Constraints:
+- `nums.length == 2 * n`
+- `1 <= n <= 500`
+- `1 <= nums[i] <= 500`
+
+---
+
+## Solution Approach
+The problem requires us to check whether we can form `n` pairs where both elements in each pair are the same.
+
+### Steps to Solve:
+1. **Sort the array:** Sorting the array groups identical elements together.
+2. **Check consecutive pairs:** Iterate through the sorted array in steps of 2 and check if each pair contains the same values.
+3. **Return the result:** If any pair has different values, return `false`; otherwise, return `true`.
+
+### Code Implementation
+```java
+import java.util.*;
+
+class Solution {
+    public boolean divideArray(int[] nums) {
+        // Sort array to group equal elements together
+        Arrays.sort(nums);
+
+        // Check consecutive pairs in sorted array
+        for (int pos = 0; pos < nums.length; pos += 2) {
+            // If any pair doesn't match, we can't form n equal pairs
+            if (nums[pos] != nums[pos + 1]) {
+                return false;
+            }
+        }
+        
+        // All pairs found successfully
+        return true;
+    }
+}
+```
+
+### Complexity Analysis
+- **Sorting takes** `O(n log n)`.
+- **Iterating through the array takes** `O(n)`.
+- **Overall complexity:** `O(n log n)`, which is efficient for the given constraints.
+
+### Edge Cases Considered
+1. **Already paired elements:** `[2, 2, 4, 4, 6, 6]` → Output: `true`
+2. **Unpaired elements:** `[1, 1, 2, 3]` → Output: `false`
+3. **All same elements:** `[5, 5, 5, 5]` → Output: `true`
+4. **Minimum input size:** `[1, 1]` → Output: `true`
+
+### Alternative Approach
+Instead of sorting, we can use a **hash map (frequency counter)** to check if all elements appear an even number of times. This reduces sorting time but requires extra space.
+
+---
+
+## Summary
+- **Sorting helps in grouping elements together.**
+- **Iterating in steps of 2 ensures valid pairs.**
+- **O(n log n) time complexity is efficient for constraints.**
+
+This approach ensures that we can determine whether the array can be divided into `n` equal pairs efficiently. 🚀
+
