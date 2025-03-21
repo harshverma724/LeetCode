@@ -1,0 +1,126 @@
+# Find All Possible Recipes from Given Supplies (LeetCode 2115)
+
+## Problem Statement
+You have information about `n` different recipes. You are given:
+- A string array `recipes`, where `recipes[i]` is the name of a recipe.
+- A 2D string array `ingredients`, where `ingredients[i]` lists the ingredients needed for `recipes[i]`.
+- A string array `supplies`, containing the ingredients that you initially have an infinite supply of.
+
+A recipe can also be an ingredient for another recipe. The goal is to determine which recipes can be created using the available supplies. Return the list of all possible recipes that can be made.
+
+### Example 1:
+```plaintext
+Input: recipes = ["bread"], ingredients = [["yeast","flour"]], supplies = ["yeast","flour","corn"]
+Output: ["bread"]
+```
+
+### Example 2:
+```plaintext
+Input: recipes = ["bread","sandwich"], ingredients = [["yeast","flour"],["bread","meat"]], supplies = ["yeast","flour","meat"]
+Output: ["bread","sandwich"]
+```
+
+### Example 3:
+```plaintext
+Input: recipes = ["bread","sandwich","burger"], ingredients = [["yeast","flour"],["bread","meat"],["sandwich","meat","bread"]], supplies = ["yeast","flour","meat"]
+Output: ["bread","sandwich","burger"]
+```
+
+### Constraints:
+- `1 <= n <= 100`
+- `1 <= ingredients[i].length, supplies.length <= 100`
+- `1 <= recipes[i].length, ingredients[i][j].length, supplies[k].length <= 10`
+- All values in `recipes` and `supplies` are unique.
+- Each `ingredients[i]` does not contain duplicates.
+
+---
+
+## Solution Approach
+This problem can be solved using a **BFS approach** where we process recipes iteratively based on available ingredients.
+
+### Steps:
+1. **Track available ingredients**: Use a `Set<String>` to store initially available ingredients from `supplies`.
+2. **Use a queue to process recipes**: Initialize a queue with all recipe indices.
+3. **Iterate until no new recipes can be created**:
+   - Check if all ingredients for a recipe are available.
+   - If yes, add the recipe to the available set and result list.
+   - If not, reprocess the recipe later.
+
+---
+
+## Code Implementation (Java)
+```java
+import java.util.*;
+
+class Solution {
+    public List<String> findAllRecipes(
+        String[] recipes,
+        List<List<String>> ingredients,
+        String[] supplies
+    ) {
+        // Track available ingredients and recipes
+        Set<String> available = new HashSet<>();
+        for (String supply : supplies) {
+            available.add(supply);
+        }
+
+        // Queue to process recipe indices
+        Queue<Integer> recipeQueue = new LinkedList<>();
+        for (int idx = 0; idx < recipes.length; ++idx) {
+            recipeQueue.offer(idx);
+        }
+
+        List<String> createdRecipes = new ArrayList<>();
+        int lastSize = -1;
+
+        // Continue while we keep finding new recipes
+        while (available.size() > lastSize) {
+            lastSize = available.size();
+            int queueSize = recipeQueue.size();
+
+            // Process all recipes in current queue
+            while (queueSize-- > 0) {
+                int recipeIdx = recipeQueue.poll();
+                boolean canCreate = true;
+
+                // Check if all ingredients are available
+                for (String ingredient : ingredients.get(recipeIdx)) {
+                    if (!available.contains(ingredient)) {
+                        canCreate = false;
+                        break;
+                    }
+                }
+
+                if (!canCreate) {
+                    recipeQueue.offer(recipeIdx);
+                } else {
+                    // Recipe can be created - add to available items
+                    available.add(recipes[recipeIdx]);
+                    createdRecipes.add(recipes[recipeIdx]);
+                }
+            }
+        }
+
+        return createdRecipes;
+    }
+}
+```
+
+---
+
+## Complexity Analysis
+- **Time Complexity:** `O(n * m)`, where `n` is the number of recipes and `m` is the average number of ingredients per recipe.
+- **Space Complexity:** `O(n + s)`, where `s` is the number of initial supplies stored in the set.
+
+---
+
+## Summary
+✅ Uses BFS with a queue to iteratively process recipes.
+✅ Efficiently tracks available ingredients using a HashSet.
+✅ Avoids redundant checks by processing recipes in rounds.
+✅ Handles cyclic dependencies in recipes correctly.
+
+---
+
+### ⭐ If you found this helpful, consider starring this repository on GitHub! 🚀
+
