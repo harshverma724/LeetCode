@@ -17,7 +17,7 @@ Practicing LeetCode problems daily helps in:
 ## Repository Clone Link:
 
 ```
-https://github.com/kavya-sharma22/LeetCode
+https://github.com/harshverma724/LeetCode
 ```
 
 ## How to Use This Repository?
