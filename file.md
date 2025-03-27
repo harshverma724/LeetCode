@@ -103,3 +103,9 @@ class Solution {
 ## Alternative Approaches
 - A more optimized solution could involve reducing the use of extra space by tracking frequencies differently.
 
+## Related Topics
+- Hash Maps
+- Prefix Sum
+- Frequency Counting
+
+    
