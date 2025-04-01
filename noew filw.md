@@ -1,0 +1,124 @@
+# Solving Questions With Brainpower (LeetCode 2140)
+
+## Problem Statement
+You are given a **0-indexed 2D integer array** `questions` where `questions[i] = [pointsi, brainpoweri]`.
+
+The array describes the questions of an exam, where you have to process the questions in order (i.e., starting from question 0) and make a decision whether to solve or skip each question. Solving question `i` will earn you `pointsi` points but you will be unable to solve each of the next `brainpoweri` questions. If you skip question `i`, you get to make the decision on the next question.
+
+### Example 1:
+#### Input:
+```plaintext
+questions = [[3,2],[4,3],[4,4],[2,5]]
+```
+#### Output:
+```plaintext
+5
+```
+#### Explanation:
+- Solve question 0: Earn `3` points, unable to solve questions `1` and `2`
+- Solve question 3: Earn `2` points
+- Total points: `3 + 2 = 5`
+
+### Example 2:
+#### Input:
+```plaintext
+questions = [[1,1],[2,2],[3,3],[4,4],[5,5]]
+```
+#### Output:
+```plaintext
+7
+```
+#### Explanation:
+- Skip question `0`
+- Solve question `1`: Earn `2` points
+- Solve question `4`: Earn `5` points
+- Total points: `2 + 5 = 7`
+
+## Constraints:
+- `1 <= questions.length <= 10^5`
+- `questions[i].length == 2`
+- `1 <= pointsi, brainpoweri <= 10^5`
+
+---
+
+## Solution (Java)
+This problem can be solved using **Dynamic Programming (DP)** with a bottom-up approach.
+
+### Approach:
+1. Define `dp[i]` as the maximum points obtainable starting from index `i`.
+2. Iterate **backwards** from the last question to the first.
+3. Choose between:
+   - **Solving** the question and skipping `brainpower[i]` questions.
+   - **Skipping** the question and taking `dp[i+1]`.
+4. Store the maximum value in `dp[i]`.
+
+### Code Implementation:
+```java
+class Solution {
+    public long mostPoints(int[][] questions) {
+        int n = questions.length;
+        long[] dp = new long[n + 1];
+        
+        for (int i = n - 1; i >= 0; i--) {
+            int points = questions[i][0];
+            int brainpower = questions[i][1];
+            
+            int nextQuestion = i + brainpower + 1;
+            long solve = points + (nextQuestion < n ? dp[nextQuestion] : 0);
+            long skip = dp[i + 1];
+            
+            dp[i] = Math.max(solve, skip);
+        }
+        
+        return dp[0];
+    }
+}
+```
+
+### Complexity Analysis:
+- **Time Complexity**: `O(n)`, since we traverse the `questions` array once.
+- **Space Complexity**: `O(n)`, for the `dp` array.
+
+### Explanation:
+- The DP array `dp[i]` stores the maximum points we can get starting from question `i`.
+- At each question, we decide whether to solve or skip it.
+- The final answer is `dp[0]`, which gives the maximum possible points from the start.
+
+---
+
+## Alternative Approach (Space Optimization)
+Since `dp[i]` only depends on future values, we can reduce space complexity to `O(1)` by using two variables.
+```java
+class Solution {
+    public long mostPoints(int[][] questions) {
+        int n = questions.length;
+        long next = 0, curr = 0;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            int points = questions[i][0];
+            int brainpower = questions[i][1];
+            
+            long solve = points + ((i + brainpower + 1 < n) ? next : 0);
+            long skip = curr;
+            
+            next = curr;
+            curr = Math.max(solve, skip);
+        }
+        
+        return curr;
+    }
+}
+```
+
+- **Time Complexity**: `O(n)`
+- **Space Complexity**: `O(1)`
+
+---
+
+## Summary
+- This problem is a classic **Dynamic Programming** problem.
+- A **bottom-up DP approach** works efficiently within the given constraints.
+- Optimized approach reduces space complexity from `O(n)` to `O(1)`.
+
+🚀 **Happy Coding!** 🎯
+
