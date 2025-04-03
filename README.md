@@ -48,7 +48,7 @@ Feel free to:
 ---
 
 ## 🔗 Connect With Me  
-- **LeetCode Profile**: [My LeetCode](https://leetcode.com/your-profile)  
+- **LeetCode Profile**: https://leetcode.com/u/harshverma724/ 
 - **GitHub**: [My GitHub](https://github.com/your-username)  
 - **LinkedIn**: https://www.linkedin.com/in/harsh-verma-346495208/
 
