@@ -32,7 +32,7 @@ Each problem is organized as follows:
 ## 🚀 How to Use This Repository  
 1. Clone this repository using:  
    ```bash
-   git clone https://github.com/your-username/leetcode-solutions.git
+   git clone https://github.com/harshverma724/LeetCode
    ```
 2. Navigate to a problem folder and check out the **README.md** for the explanation.  
 3. Run the **Java solution** using any Java compiler or an IDE like **IntelliJ IDEA / VS Code / Eclipse / Android Studio**.  
