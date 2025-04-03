@@ -50,6 +50,6 @@ Feel free to:
 ## 🔗 Connect With Me  
 - **LeetCode Profile**: [My LeetCode](https://leetcode.com/your-profile)  
 - **GitHub**: [My GitHub](https://github.com/your-username)  
-- **LinkedIn**: [My LinkedIn](https://linkedin.com/in/your-profile)  
+- **LinkedIn**: https://www.linkedin.com/in/harsh-verma-346495208/
 
 Happy Coding! 🚀  
