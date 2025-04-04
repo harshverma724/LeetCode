@@ -1,4 +1,4 @@
-#### My LeetCode Problem-Solving Journey
+### My LeetCode Problem-Solving Journey
 
 ## 📌 About This Repository  
 Welcome to my **LeetCode Solutions Repository**! 🚀  
